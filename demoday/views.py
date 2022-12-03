@@ -20,6 +20,7 @@ class TeamView(APIView):
         # 유저 투표권 개수에 따른 투표/취소 구현 필요
 
         serializer = TeamSerializer(data=request.data)
+
         if serializer.is_valid():
             team = get_object_or_404(Team, team_name=serializer.data['team_name'])
             team.vote_count += 1
