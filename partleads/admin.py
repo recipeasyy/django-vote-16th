@@ -3,5 +3,4 @@ from .models import *
 # Register your models here.
 
 
-admin.site.register(BackEnd)
-admin.site.register(FrontEnd)
+admin.site.register(Candidate)
