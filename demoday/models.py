@@ -4,11 +4,20 @@ from django.db import models
 
 
 class Team(models.Model):
-    recipeasy = models.IntegerField(default=0)
-    forgetmenot = models.IntegerField(default=0)
-    prefolio = models.IntegerField(default=0)
-    diametes = models.IntegerField(default=0)
-    teample = models.IntegerField(default=0)
+
+    CHOICES = (
+        ('RECIPEASY', 'RECIPEASY'),
+        ('TEAMPLE', 'TEAMPLE'),
+        ('FORGET_ME_NOT', 'FORGET_ME_NOT'),
+        ('PREFOLIO', 'PREFOLIO'),
+        ('DIAMETES', 'DIAMETES')
+    )
+
+    team_name = models.CharField(choices=CHOICES, max_length=20)
+
+    vote_count = models.IntegerField(default=0)
 
     def __str__(self):
-        return 'Team'
+        return self.team_name
+
+
