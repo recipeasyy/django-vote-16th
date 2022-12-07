@@ -30,8 +30,6 @@ class UserLoginSerializer(serializers.Serializer):
         if User.objects.filter(email=email).exists():
             user = User.objects.get(email=email)
             if not user.check_password(password):
-                raise serializers.ValidationError('잘못된 비밀번호입니다.')
-            else:
                 token = RefreshToken.for_user(user)
                 #refresh = str(token)
                 access = str(token.access_token)
@@ -41,7 +39,9 @@ class UserLoginSerializer(serializers.Serializer):
                     'access_token': access,
                     'username': user.username
                 }
-
+                
                 return data
+            else:
+                raise serializers.ValidationError('잘못된 비밀번호입니다.')
         else:
             raise serializers.ValidationError('존재하지 않는 이메일입니다.')
