@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.contrib.auth import logout
 from rest_framework import views
 from rest_framework.response import Response
 from rest_framework.status import *
@@ -28,3 +28,9 @@ class LoginView(views.APIView):
         if serializer.is_valid():
             return Response({'message': "로그인 성공", 'data': serializer.validated_data}, status=HTTP_200_OK)
         return Response({'message': "로그인 실패", 'data': serializer.errors}, status=HTTP_400_BAD_REQUEST)
+
+
+class LogoutView(views.APIView):
+    def get(self, request, format=None):
+        logout(request)
+        return Response({'message': "로그아웃 성공"}, status=HTTP_200_OK)
