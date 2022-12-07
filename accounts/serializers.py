@@ -1,4 +1,5 @@
 from rest_framework import serializers
+from rest_framework_simplejwt.tokens import RefreshToken
 from django.contrib.auth import login
 
 from .models import User
@@ -16,3 +17,31 @@ class UserSerializer(serializers.ModelSerializer):
         user.save()
         login(self.context['request'], user)
         return user
+
+
+class UserLoginSerializer(serializers.Serializer):
+    email = serializers.EmailField(max_length=64)
+    password = serializers.CharField(max_length=128, write_only=True)
+
+    def validate(self, data):
+        email = data.get("email", None)
+        password = data.get("password", None)
+
+        if User.objects.filter(email=email).exists():
+            user = User.objects.get(email=email)
+            if not user.check_password(password):
+                raise serializers.ValidationError('잘못된 비밀번호입니다.')
+            else:
+                token = RefreshToken.for_user(user)
+                #refresh = str(token)
+                access = str(token.access_token)
+
+                data = {
+                    'user': user.email,
+                    'access_token': access,
+                    'username': user.username
+                }
+
+                return data
+        else:
+            raise serializers.ValidationError('존재하지 않는 이메일입니다.')
