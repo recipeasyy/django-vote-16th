@@ -3,6 +3,7 @@ from django.shortcuts import render
 # Create your views here.
 from rest_framework import status
 from rest_framework.generics import get_object_or_404
+from rest_framework.permissions import IsAuthenticatedOrReadOnly
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
@@ -15,6 +16,8 @@ POSITION_DICT = {
 }
 
 class CandidateView(APIView):
+    permission_classes = [IsAuthenticatedOrReadOnly]
+
     def get(self, request, position):
         candidates = Candidate.objects.filter(position=POSITION_DICT[position])
         serializer = CandidateSerializer(candidates, many=True)
