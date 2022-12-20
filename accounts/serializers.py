@@ -29,7 +29,7 @@ class UserLoginSerializer(serializers.Serializer):
 
         if User.objects.filter(email=email).exists():
             user = User.objects.get(email=email)
-            if not user.check_password(password):
+            if user.check_password(password):
                 token = RefreshToken.for_user(user)
                 #refresh = str(token)
                 access = str(token.access_token)
