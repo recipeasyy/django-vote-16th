@@ -16,7 +16,7 @@ from datetime import timedelta
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
-env = environ.Env(DEBUG=(bool, False))
+env = environ.Env(DEBUG=(bool, True))
 
 environ.Env.read_env(os.path.join(BASE_DIR, '.env'))
 
@@ -39,7 +39,9 @@ REST_FRAMEWORK = {
     ]
 }
 
-CSRF_TRUSTED_ORIGINS=['https://ceosvote.com', 'https://www.ceosvote.com']
+CSRF_TRUSTED_ORIGINS=['https://ceosvote.com', 'https://www.ceosvote.com', 'http://www.ceosvote.com', 'http://www.ceosvote.com']
+
+SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO','https')
 
 REST_USE_JWT = True
 
