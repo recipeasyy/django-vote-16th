@@ -6,4 +6,4 @@ from partleads.models import Candidate
 class CandidateSerializer(serializers.ModelSerializer):
     class Meta:
         model = Candidate
-        fields = ['name', 'position', 'vote_count']
+        fields = ['id', 'name', 'vote_count', 'position']

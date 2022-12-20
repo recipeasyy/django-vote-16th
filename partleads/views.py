@@ -3,9 +3,12 @@ from django.shortcuts import render
 # Create your views here.
 from rest_framework import status
 from rest_framework.generics import get_object_or_404
+from rest_framework.parsers import JSONParser
+from rest_framework.permissions import IsAuthenticatedOrReadOnly
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
+from accounts.models import User
 from partleads.models import Candidate
 from partleads.serializer import CandidateSerializer
 
@@ -15,22 +18,27 @@ POSITION_DICT = {
 }
 
 class CandidateView(APIView):
+    permission_classes = [IsAuthenticatedOrReadOnly]
+
     def get(self, request, position):
         candidates = Candidate.objects.filter(position=POSITION_DICT[position])
         serializer = CandidateSerializer(candidates, many=True)
         return Response(serializer.data)
 
-    def post(self, request):
-        # 유저 토큰 관련 예외 처리 필요
-        # 유저 투표권 개수에 따른 투표/취소 구현 필요
+    def post(self, request, position):
+        user = User.objects.filter(id=request.user.id)[0]
+
+        if(user.vote_part):
+            return Response({'Message': 'No more vote count'}, status=status.HTTP_400_BAD_REQUEST)
 
         serializer = CandidateSerializer(data=request.data)
-
         if(serializer.is_valid()):
-            candidate = get_object_or_404(Candidate, position=serializer.data['position'], name=serializer.data['name'])
+            candidate = get_object_or_404(Candidate, position=POSITION_DICT[position], id=request.data['id'])
             candidate.vote_count += 1
             candidate.save()
             serializer = CandidateSerializer(candidate)
+            user.vote_part = True
+            user.save()
             return Response(serializer.data, status=status.HTTP_200_OK)
 
         return Response({'Message': 'Candidate not found'}, status=status.HTTP_404_NOT_FOUND)
