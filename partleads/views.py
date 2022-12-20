@@ -24,8 +24,8 @@ class CandidateView(APIView):
         return Response(serializer.data)
 
     def post(self, request):
-        # 유저 토큰 관련 예외 처리 필요
-        # 유저 투표권 개수에 따른 투표/취소 구현 필요
+
+
 
         serializer = CandidateSerializer(data=request.data)
 
