@@ -58,7 +58,7 @@ TEAM_CHOICE = (
 
 class User(AbstractUser):
     email = models.EmailField(max_length=20, unique=True)
-    password = models.CharField(max_length=100)
+    password = models.CharField(max_length=500)
     name = models.CharField(max_length=20)
     part = models.CharField(max_length=20, choices=PART_CHOICE)
     team = models.CharField(max_length=20, choices=TEAM_CHOICE)
