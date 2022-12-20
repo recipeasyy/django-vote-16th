@@ -52,7 +52,7 @@ INSTALLED_APPS = [
     'demoday',
     'partleads',
     'corsheaders',
-    'healthcheck',
+    'health_check',
 ]
 
 MIDDLEWARE = [
