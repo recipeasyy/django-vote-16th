@@ -20,12 +20,12 @@ POSITION_DICT = {
 class CandidateView(APIView):
     permission_classes = [IsAuthenticatedOrReadOnly]
 
-    def get(self, request, position):
-        candidates = Candidate.objects.filter(position=POSITION_DICT[position])
+    def get(self, request):
+        candidates = Candidate.objects.all()
         serializer = CandidateSerializer(candidates, many=True)
         return Response(serializer.data)
 
-    def post(self, request, position):
+    def post(self, request):
         user = User.objects.filter(id=request.user.id)[0]
 
         if(user.vote_part):
@@ -33,7 +33,8 @@ class CandidateView(APIView):
 
         serializer = CandidateSerializer(data=request.data)
         if(serializer.is_valid()):
-            candidate = get_object_or_404(Candidate, position=POSITION_DICT[position], id=request.data['id'])
+            print(serializer.data)
+            candidate = get_object_or_404(Candidate, id=request.data['id'])
             candidate.vote_count += 1
             candidate.save()
             serializer = CandidateSerializer(candidate)
