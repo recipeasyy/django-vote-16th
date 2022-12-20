@@ -21,4 +21,5 @@ urlpatterns = [
     path('candidates/', include('partleads.urls')),
     path('teams/', include('demoday.urls')),
     path('accounts/', include('accounts.urls')),
+    path('heartbeat/', include('health_check.urls')),
 ]
