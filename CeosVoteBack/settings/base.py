@@ -51,6 +51,7 @@ INSTALLED_APPS = [
     'accounts',
     'demoday',
     'partleads',
+    'corsheaders',
 ]
 
 MIDDLEWARE = [
