@@ -6,4 +6,4 @@ from demoday.models import Team
 class TeamSerializer(serializers.ModelSerializer):
     class Meta:
         model = Team
-        fields = ['team_name', 'vote_count']
+        fields = ['id', 'team_name', 'vote_count']
