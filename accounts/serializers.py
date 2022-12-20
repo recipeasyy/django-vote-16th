@@ -21,7 +21,7 @@ class UserSerializer(serializers.ModelSerializer):
 
 class UserLoginSerializer(serializers.Serializer):
     email = serializers.EmailField(max_length=64)
-    password = serializers.CharField(max_length=128, write_only=True)
+    password = serializers.CharField(max_length=500, write_only=True)
 
     def validate(self, data):
         email = data.get("email", None)
