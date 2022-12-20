@@ -39,6 +39,8 @@ REST_FRAMEWORK = {
     ]
 }
 
+CSRF_TRUSTED_ORIGINS=['https://ceosvote.com', 'https://www.ceosvote.com']
+
 REST_USE_JWT = True
 
 SIMPLE_JWT = {
