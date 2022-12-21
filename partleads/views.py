@@ -28,8 +28,8 @@ class CandidateView(APIView):
     def post(self, request):
         user = User.objects.filter(id=request.user.id)[0]
 
-        if(user.vote_part):
-            return Response({'Message': 'No more vote count'}, status=status.HTTP_400_BAD_REQUEST)
+        # if(user.vote_part):
+        #     return Response({'Message': 'No more vote count'}, status=status.HTTP_400_BAD_REQUEST)
 
         serializer = CandidateSerializer(data=request.data)
         if(serializer.is_valid()):

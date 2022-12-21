@@ -21,8 +21,8 @@ class TeamView(APIView):
     def post(self, request):
         user = User.objects.filter(id=request.user.id)[0]
 
-        if user.vote_demoday:
-            return Response({'Message': 'No more vote count'}, status=status.HTTP_400_BAD_REQUEST)
+        # if user.vote_demoday:
+        #     return Response({'Message': 'No more vote count'}, status=status.HTTP_400_BAD_REQUEST)
 
         if(request.data['team_name'] == request.user.team):
             return Response({'Message': 'You are not allowed to vote on your own team'}, status=status.HTTP_400_BAD_REQUEST)
