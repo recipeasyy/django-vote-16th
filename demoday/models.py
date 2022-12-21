@@ -6,11 +6,11 @@ from django.db import models
 class Team(models.Model):
 
     CHOICES = (
-        ('RECIPEASY', 'RECIPEASY'),
-        ('TEAMPLE', 'TEAMPLE'),
-        ('FORGET_ME_NOT', 'FORGET_ME_NOT'),
-        ('PREFOLIO', 'PREFOLIO'),
-        ('DIAMETES', 'DIAMETES')
+        ('Recipeasy', 'Recipeasy'),
+        ('Forgetmenot', 'Forgetmenot'),
+        ('Prefolio', 'Prefolio'),
+        ('Diametes', 'Diametes'),
+        ('Teample', 'Teample')
     )
 
     team_name = models.CharField(choices=CHOICES, max_length=20)

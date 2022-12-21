@@ -13,8 +13,8 @@ from partleads.models import Candidate
 from partleads.serializer import CandidateSerializer
 
 POSITION_DICT = {
-    'backend': 'BE',
-    'frontend': 'FE'
+    'Backend': 'BE',
+    'Frontend': 'FE'
 }
 
 class CandidateView(APIView):
@@ -31,10 +31,19 @@ class CandidateView(APIView):
         if(user.vote_part):
             return Response({'Message': 'No more vote count'}, status=status.HTTP_400_BAD_REQUEST)
 
+
+
+
+
         serializer = CandidateSerializer(data=request.data)
         if(serializer.is_valid()):
-            print(serializer.data)
+
             candidate = get_object_or_404(Candidate, id=request.data['id'])
+
+            if (POSITION_DICT[request.user.part] != candidate.position):
+                return Response({'Message': "You can only vote on the candidates from your part"},
+                                status=status.HTTP_400_BAD_REQUEST)
+
             candidate.vote_count += 1
             candidate.save()
             serializer = CandidateSerializer(candidate)

@@ -5,12 +5,12 @@ from django.db import models
 
 class Candidate(models.Model):
     POSITION = (
-        ('FE', 'FRONTEND'),
-        ('BE', 'BACKEND')
+        ('Frontend', 'FE'),
+        ('Backend', 'BE')
     )
     id = models.AutoField(primary_key=True)
     name = models.CharField(max_length=20)
-    position = models.CharField(choices=POSITION, max_length=2)
+    position = models.CharField(choices=POSITION, max_length=8)
     vote_count = models.IntegerField(default=0)
 
     def __str__(self):

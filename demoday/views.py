@@ -9,6 +9,7 @@ from accounts.models import User
 from demoday.models import Team
 from demoday.serializer import TeamSerializer
 
+
 class TeamView(APIView):
     permission_classes = [IsAuthenticatedOrReadOnly]
 
@@ -22,6 +23,9 @@ class TeamView(APIView):
 
         if user.vote_demoday:
             return Response({'Message': 'No more vote count'}, status=status.HTTP_400_BAD_REQUEST)
+
+        if(request.data['team_name'] == request.user.team):
+            return Response({'Message': 'You are not allowed to vote on your own team'}, status=status.HTTP_400_BAD_REQUEST)
 
         serializer = TeamSerializer(data=request.data)
         if serializer.is_valid():
