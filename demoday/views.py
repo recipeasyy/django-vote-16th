@@ -33,7 +33,7 @@ class TeamView(APIView):
             team.vote_count += 1
             team.save()
             serializer = TeamSerializer(team)
-            user.vote_demoday = True
-            user.save()
+            # user.vote_demoday = True
+            # user.save()
             return Response(serializer.data, status=status.HTTP_200_OK)
         return Response({'Message': 'Team not found'}, status=status.HTTP_404_NOT_FOUND)

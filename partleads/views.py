@@ -31,10 +31,6 @@ class CandidateView(APIView):
         if(user.vote_part):
             return Response({'Message': 'No more vote count'}, status=status.HTTP_400_BAD_REQUEST)
 
-
-
-
-
         serializer = CandidateSerializer(data=request.data)
         if(serializer.is_valid()):
 
@@ -47,8 +43,8 @@ class CandidateView(APIView):
             candidate.vote_count += 1
             candidate.save()
             serializer = CandidateSerializer(candidate)
-            user.vote_part = True
-            user.save()
+            # user.vote_part = True
+            # user.save()
             return Response(serializer.data, status=status.HTTP_200_OK)
 
         return Response({'Message': 'Candidate not found'}, status=status.HTTP_404_NOT_FOUND)
